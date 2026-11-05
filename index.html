@@ -1224,6 +1224,19 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 /* v37: одинаковая точка у отмеченных плашек */
 .rc.on::before{flex:0 0 7px!important;min-width:7px;height:7px!important;width:7px!important;align-self:center;margin-right:11px!important;border-radius:50%}
 .rc.on{align-items:center}
+
+/* v39: десктоп/кросс-браузер */
+.wipe{display:flex!important;background:transparent!important}
+.bar{-webkit-backdrop-filter:blur(12px)}
+@media (min-width:960px){:root{--maxw:780px}}
+@media (min-width:1360px){:root{--maxw:840px}}
+@media (min-width:1360px) and (min-height:900px){body{font-size:23px}}
+@supports not (color:color-mix(in srgb,red 50%,blue)){
+.sp{border-color:var(--c);background:#fff}.sp.lit{background:#fff}
+.nm,.cpan .row b,.cpan .row b i{color:var(--c,#7C8A45)}
+.cols .n p+p{border-top-color:rgba(205,180,138,.4)}
+}
+@supports not (inset:0){.wipe .knob svg,.hold .arc{top:0;right:0;bottom:0;left:0}}
 </style>
 <script>document.documentElement.className+=' js';</script>
 </head>
@@ -1989,5 +2002,12 @@ document.addEventListener('visibilitychange',function(){if(document.hidden)P.len
 </script>
 
 
+<script>
+(function(){try{if(!window.matchMedia||!matchMedia('(pointer:fine)').matches||!matchMedia('(hover:hover)').matches)return;
+var rep=[['Проведи пальцем по карточке слева направо: шторка откроет, что изменилось.','Потяни ползунок на карточке вправо: шторка откроет, что изменилось.'],['тяни вправо','тяни ползунок вправо'],['или смахни карточку,','или листай стрелками,'],['Смахни карточку или выбери строку ниже','Листай стрелками или выбери строку ниже'],['Смахни карточку','Листай']];
+var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n,L=[];while(n=w.nextNode())L.push(n);
+L.forEach(function(t){if(/SCRIPT|STYLE/.test(t.parentNode.nodeName))return;var v=t.nodeValue;rep.forEach(function(r){if(v.indexOf(r[0])>-1)v=v.split(r[0]).join(r[1])});if(v!==t.nodeValue)t.nodeValue=v});
+}catch(e){}})();
+</script>
 </body>
 </html>
