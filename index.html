@@ -1215,6 +1215,11 @@ html:not(.js) .sfb .st .stc:checked ~ .hd .pl::after{transform:rotate(90deg);opa
 #hs0_4:checked ~ .hring .seg:nth-child(4){stroke:var(--gold)}
 #hs0_4:checked ~ .hring .seg:nth-child(5){stroke:var(--gold-d)}
 html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb .heart .hn2,html:not(.js) .sfb .heart .hn3,html:not(.js) .sfb .heart .hn4{}
+
+/* v35: заголовки и отметки */
+.kicker{text-wrap:balance}
+.rc.on{background:linear-gradient(135deg,#FFF7E8,#F3E1D4)!important;border-color:rgba(181,139,88,.8)!important;color:#1A0F16!important;font-weight:600;box-shadow:0 10px 24px -14px rgba(120,80,60,.5)!important}
+.rc.on::before{width:7px!important;height:7px!important;background:#B58B58!important}
 </style>
 <script>document.documentElement.className+=' js';</script>
 </head>
@@ -1272,7 +1277,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="programmy">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Части 1 и 2 · С чего ты начинала и что произошло</div>
+      <div class="kicker">Часть 1 · С чего ты начинала</div>
       <h2>Основные программы <i>личности</i></h2>
       <p class="lead">Проведи пальцем по карточке слева направо: шторка откроет, что изменилось.</p>
     </div>
@@ -1298,7 +1303,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="os">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Часть 2 · Энергоцентры</div>
+      <div class="kicker">Часть 3 · Энергоцентры</div>
       <h2>Изменения по <i>энергоцентрам</i></h2>
       <p class="lead">Поднимайся по оси снизу вверх: на каждой ступени видно, с чего ты входила и что изменилось.</p>
     </div>
@@ -1318,7 +1323,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="uzel">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Часть 3 · Главный оставшийся узел</div>
+      <div class="kicker">Часть 4 · Главный оставшийся узел</div>
       <h2>Контроль личности над самим <i>пробуждением</i></h2>
       <p class="lead">Ты продвинулась в распознавании грубых форм эго — жертвы, агрессии, заслуживания, конкуренции. Теперь проявляется более тонкий механизм.</p>
     </div>
@@ -1361,7 +1366,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="tropa">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Часть 4 · Что сейчас важно</div>
+      <div class="kicker">Часть 5 · Что сейчас важно</div>
       <h2>Семь <i>приоритетов</i></h2>
       <p class="lead">Открывай приоритет и читай. Когда он уже стал частью твоей жизни — отметь это. Отметки сохраняются на этом устройстве.</p>
     </div>
@@ -1375,7 +1380,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="grani">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Часть 5 · Тонкие грани</div>
+      <div class="kicker">Часть 6 · Тонкие грани</div>
       <h2>Тонкие <i>грани</i></h2>
       <p class="lead">Выбери ситуацию из списка или смахни карточку, чтобы увидеть следующую.</p>
     </div>
@@ -1390,7 +1395,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 <section id="kriterii">
   <div class="inner">
     <div class="rv">
-      <div class="kicker">Часть 6 · Закрепление</div>
+      <div class="kicker">Часть 7 · Закрепление</div>
       <h2>Как понять, что результат <i>закрепляется</i></h2>
       <p class="lead">Не измеряй интеграцию количеством сессий, инсайтов или дней без сложных эмоций. Обращай внимание на реальные изменения.</p>
     </div>
@@ -1515,6 +1520,18 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
     w.innerHTML='<div class="stack"><div class="l was"><div class="tg">Было</div><div class="t">'+d[0]+'</div><p>'+d[1]+'</p></div><div class="l now"><div class="tg">Стало</div><div class="t">'+d[0]+'</div><p>'+d[2]+'</p></div></div><div class="edge"></div><div class="knob">'+HRT+'</div><input type="range" min="0" max="100" value="0" aria-label="Было и стало: '+d[0].replace(/[«»]/g,'')+'">';
     var inp=w.querySelector('input');
     inp.addEventListener('input',function(){w.style.setProperty('--v',inp.value);w.classList.remove('demo');w.classList.toggle('dr',inp.value>3);});
+    /* iOS: родной ползунок input ловит касание только на «пимпочке», поэтому ведём шторку сами по движению пальца */
+    if(window.PointerEvent){
+      inp.style.pointerEvents='none';
+      var dg=false,lk=null,pid=null,sx=0,sy=0,v0=0;
+      w.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;dg=true;lk=null;pid=e.pointerId;sx=e.clientX;sy=e.clientY;v0=Number(inp.value)||0;});
+      w.addEventListener('pointermove',function(e){
+        if(!dg||e.pointerId!==pid)return;
+        if(lk===null){var dx=Math.abs(e.clientX-sx),dy=Math.abs(e.clientY-sy);if(dx+dy<5)return;lk=dx>=dy?'x':'y';if(lk==='x'){try{w.setPointerCapture(pid)}catch(_){}}}
+        if(lk==='x'){var r=w.getBoundingClientRect();var v=v0+(e.clientX-sx)/Math.max(120,r.width-48)*100;v=Math.max(0,Math.min(100,v));inp.value=Math.round(v);inp.dispatchEvent(new Event('input'));}
+      });
+      ['pointerup','pointercancel'].forEach(function(t){w.addEventListener(t,function(e){if(e.pointerId===pid){dg=false;lk=null;}});});
+    }
     wp.appendChild(w);
   });
 
