@@ -1220,6 +1220,10 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
 .kicker{text-wrap:balance}
 .rc.on{background:linear-gradient(135deg,#FFF7E8,#F3E1D4)!important;border-color:rgba(181,139,88,.8)!important;color:#1A0F16!important;font-weight:600;box-shadow:0 10px 24px -14px rgba(120,80,60,.5)!important}
 .rc.on::before{width:7px!important;height:7px!important;background:#B58B58!important}
+
+/* v37: одинаковая точка у отмеченных плашек */
+.rc.on::before{flex:0 0 7px!important;min-width:7px;height:7px!important;width:7px!important;align-self:center;margin-right:11px!important;border-radius:50%}
+.rc.on{align-items:center}
 </style>
 <script>document.documentElement.className+=' js';</script>
 </head>
@@ -1939,10 +1943,10 @@ gr.addColorStop(0,'rgba('+r+','+g+','+b+','+core+')');gr.addColorStop(.3,'rgba('
 var SP=[sprite(255,252,244,.9),sprite(232,200,130,.9),sprite(255,240,200,1)];SP[2]=sprite(214,217,224,.9);var BL=(function(){var c=document.createElement('canvas');c.width=c.height=256;var x=c.getContext('2d');var g=x.createRadialGradient(128,128,0,128,128,128);
 var st=[[0,.55],[.2,.42],[.4,.24],[.6,.1],[.8,.03],[1,0]];for(var i=0;i<st.length;i++)g.addColorStop(st[i][0],'rgba(250,232,188,'+st[i][1]+')');x.fillStyle=g;x.fillRect(0,0,256,256);return c})();
 var bx=0,by=0,tx=0,ty=0,bi=0,bt=0;
-function spawn(x,y,n,burst){
+function spawn(x,y,n,burst,big){
  for(var i=0;i<n&&P.length<MAX;i++){
   var a=Math.random()*6.2832,sp=burst?(6+Math.random()*48):(3+Math.random()*16);
-  var k=Math.random(),sz=burst?(k<.8?.3+Math.random()*.35:.6+Math.random()*.3):.26+Math.random()*.26;
+  var k=Math.random(),sz=big?(1.7+Math.random()*1.1):burst?(k<.8?.3+Math.random()*.35:.6+Math.random()*.3):.26+Math.random()*.26;
   var t=Math.random();var kind=t<.4?0:(t<.78?1:2);
   P.push({x:x+(Math.random()-.5)*10,y:y+(Math.random()-.5)*10,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-6,sz:sz,kind:kind,
    life:0,max:2.2+Math.random()*3,ph:Math.random()*6.28,tw:1.5+Math.random()*3.5,dz:.55+Math.random()*.45,al:(kind==2?.62:.78)})
@@ -1971,13 +1975,13 @@ function pos(e){var r=host.getBoundingClientRect();return [e.clientX-r.left,e.cl
 host.addEventListener('pointermove',function(e){var q=pos(e);if(lx<0){lx=q[0];ly=q[1];return}var dx=q[0]-lx,dy=q[1]-ly,dist=Math.sqrt(dx*dx+dy*dy);lx=q[0];ly=q[1];acc+=dist;
  if(acc>26){acc=0;spawn(q[0],q[1],1+(Math.random()<.5?1:0),false)}glint(q[0],q[1],.38)},{passive:true});
 host.addEventListener('pointerleave',function(){lx=-1});
-function mote(){if(!vis||document.hidden)return;var r=host.getBoundingClientRect();if(r.width<10)return;var a=Math.random()*6.283,m=Math.sqrt(Math.random());spawn(r.width*(.5+Math.cos(a)*.32*m),r.height*(.5+Math.sin(a)*.2*m)-r.height*.02,1,false)}
+function mote(){if(!vis||document.hidden)return;var r=host.getBoundingClientRect();if(r.width<10)return;var a=Math.random()*6.283,m=Math.sqrt(Math.random());spawn(r.width*(.5+Math.cos(a)*.46*m),r.height*(.5+Math.sin(a)*.34*m)-r.height*.02,2,false,true)}
 (function(){var hr=document.getElementById('chrt');if(!hr)return;var iv=0,tm=0;
 function emit(){var a=host.getBoundingClientRect(),b=hr.getBoundingClientRect();if(b.width<2)return;spawn(b.left-a.left+b.width/2+(Math.random()-.5)*8,b.top-a.top+b.height/2+(Math.random()-.5)*6,1,false)}
 function on(){clearTimeout(tm);hr.classList.add('pl');if(!iv){emit();iv=setInterval(emit,130)}}
 function off(){clearTimeout(tm);tm=setTimeout(function(){hr.classList.remove('pl');clearInterval(iv);iv=0},1300)}
 hr.addEventListener('pointerenter',on);hr.addEventListener('pointerdown',on);hr.addEventListener('pointerleave',off);hr.addEventListener('pointerup',off);hr.addEventListener('pointercancel',off)})();
-var n0=0,iv0=setInterval(function(){mote();if(++n0>14){clearInterval(iv0);setInterval(mote,2200)}},260);
+var n0=0,iv0=setInterval(function(){mote();if(++n0>14){clearInterval(iv0);setInterval(mote,1000)}},260);
 host.addEventListener('pointerdown',function(e){var q=pos(e);spawn(q[0],q[1],16,true);glint(q[0],q[1],.5)},{passive:true});
 if(window.IntersectionObserver)new IntersectionObserver(function(en){vis=en[0].isIntersecting;if(!vis){P.length=0}},{threshold:0}).observe(host);
 document.addEventListener('visibilitychange',function(){if(document.hidden)P.length=0});
