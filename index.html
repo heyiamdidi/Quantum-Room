@@ -106,7 +106,7 @@ p{margin-bottom:16px}p:last-child{margin-bottom:0}
 .pr-i .no{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--gold-d);margin-bottom:8px}
 .pr-i h3{font-size:26px;font-weight:600}
 .pr-i p{font-size:20.5px;color:var(--ink)}
-.pr-i .more{max-height:0;overflow:hidden;transition:max-height .7s ease}
+.pr-i .more{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.4,0,.2,1)}
 .pr-i.open .more{max-height:600px}
 .deeper{margin-top:8px;font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--gold-d);display:inline-flex;gap:8px;align-items:center;padding:8px 0}
 .deeper::after{content:'';width:7px;height:7px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .4s}
@@ -202,7 +202,7 @@ p{margin-bottom:16px}p:last-child{margin-bottom:0}
 .st .hd .pl::before{left:0;right:0;top:5.5px;height:1px}.st .hd .pl::after{top:0;bottom:0;left:5.5px;width:1px}
 .st.open .hd{border-color:var(--gold)}
 .st.open .hd .pl::after{transform:rotate(90deg);opacity:0}
-.st .bd{max-height:0;overflow:hidden;transition:max-height .7s ease}
+.st .bd{max-height:0;overflow:hidden;transition:max-height .95s cubic-bezier(.4,0,.2,1)}
 .st .bi{padding:22px 4px 6px}
 .st .bi .intro{font-size:20.5px;color:var(--ink);margin-bottom:14px}
 .st .sub{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--gold-d);margin:20px 0 10px}
@@ -997,12 +997,12 @@ em,.big em,h2 i,.lit em .w.on,.lit em .w,.finale .big em{color:#74475A!important
 
 /* v23: бегунок — сначала спокойный круг с бледным сердцем, после перетаскивания золотое */
 .hint{text-transform:none!important;letter-spacing:.2em!important;font-size:12px!important}
-.wipe .knob{width:34px!important;height:34px!important;margin:0 0 -17px -17px!important;box-shadow:0 4px 12px -5px rgba(80,53,79,.28)!important;background:#FFFEFC!important;border-color:rgba(205,190,170,.75)!important}
-.wipe .knob svg{position:absolute;inset:0;margin:auto;width:17px!important;height:17px!important;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.wipe .knob{transition:border-color .6s ease;width:34px!important;height:34px!important;margin:0 0 -17px -17px!important;box-shadow:0 4px 12px -5px rgba(80,53,79,.28)!important;background:#FFFEFC!important;border-color:rgba(205,190,170,.75)!important}
+.wipe .knob svg{position:absolute;inset:0;margin:auto;width:17px!important;height:17px!important;transition:opacity .6s ease}
 .wipe .knob svg.p{fill:#D8D1D3!important;stroke:none!important;filter:none!important;opacity:.9}
-.wipe .knob svg.g{opacity:0;transform:scale(.4);fill:url(#hgold)}
-.wipe.dr .knob svg.p{opacity:0;transform:scale(.8)}
-.wipe.dr .knob svg.g{opacity:1;transform:scale(1.12)}
+.wipe .knob svg.g{opacity:0;fill:url(#hgold)}
+.wipe.dr .knob svg.p{opacity:0}
+.wipe.dr .knob svg.g{opacity:1}
 .wipe.dr .knob{border-color:rgba(205,176,116,.8)!important}
 
 /* v25: запасной вид без JS / без WebGL (быстрый просмотр на iPhone, старый браузер) */
@@ -1493,7 +1493,7 @@ html:not(.js) .sfb .heart .hn0,html:not(.js) .sfb .heart .hn1,html:not(.js) .sfb
     var e=document.createElement('div');e.className='pr-i';e.style.setProperty('--c',MC[i%7]);
     e.innerHTML='<div class="node"><i></i></div><div class="no">Принцип '+(i+1)+'</div><h3>'+d[0]+'.</h3><p>'+d[1]+'</p><div class="more"><p style="margin-top:12px">'+d[2]+'</p></div><button type="button" class="deeper" aria-expanded="false">Глубже</button>';
     var b=e.querySelector('.deeper');
-    b.addEventListener('click',function(){var o=e.classList.toggle('open');b.setAttribute('aria-expanded',o);b.firstChild.nodeValue=o?'Свернуть':'Глубже';});
+    var mo=e.querySelector('.more');b.addEventListener('click',function(){var o=e.classList.toggle('open');b.setAttribute('aria-expanded',o);b.firstChild.nodeValue=o?'Свернуть':'Глубже';if(mo){if(o){mo.style.maxHeight=(mo.scrollHeight+4)+'px';}else{mo.style.maxHeight=mo.scrollHeight+'px';void mo.offsetHeight;mo.style.maxHeight='0px';}}});if(mo)mo.addEventListener('transitionend',function(){if(e.classList.contains('open'))mo.style.maxHeight='none';});
     th.appendChild(e);prItems.push(e);
   });
   function updThread(){
